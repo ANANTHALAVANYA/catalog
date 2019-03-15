@@ -1,0 +1,15 @@
+{% include 'nav_bar.html' %}
+<div class="main">
+{% block content %}
+    
+<div class="">
+  <h2>EDIT Pendrive CATEGORY</h2>
+  <form class="form-inline" action="{{ url_for('changepdgroup',pdccid=pdbb.id)}}" method="post">
+    <div class="form-group">
+      <label for="pdusername">PENDRIVE NAME:</label>
+      <input type="text" class="form-control" id="pdusername" value="{{pdbb.pdusername}}" name="pdusername">
+    </div>
+    <button type="submit" class="btn btn-default">SUBMIT</button>
+  </form>
+</div>
+{% endblock content %}

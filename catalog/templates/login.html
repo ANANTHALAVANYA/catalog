@@ -1,0 +1,77 @@
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+<script>
+  function start() {
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '938635623978-7lsp72rpi1at2ulqfbgv08k1gqqm8p3v.apps.googleusercontent.com'
+      });
+    });
+  }
+</script>
+<center><div id="result">
+  <div class="container">
+  <div class="row"> 
+    {% for pdbb in pdpdcc %}
+    
+      <div class="col-sm-3" style="border:1px solid blue;
+            border-radius: 20px;padding: 30px; width: 350px; margin: 20px;">
+          <a href="{{ url_for('showPds',pdccid=pdbb.id)}}" style="text-decoration: none;"><h4 class="text-primary">{{pdbb.pdusername}}</h4></a>
+          
+      </div>
+      
+    {% endfor %}
+  </div>  
+</div>
+</div></center>
+
+<!-- {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <script>
+            var messages = {{ messages | safe }};
+            for (var i=0; i<messages.length; i++) {
+              alert(messages[i]);
+            }
+          </script>
+        {% endif %}
+    {% endwith %} -->
+
+</head>
+<body>
+
+<center><button id="signinButton" class="btn btn-primary" style="color:red";>Google Signin</button></center>
+<div id="result"></div>
+<script>
+  $('#signinButton').click(function() {
+    function signInCallback(authResult){
+      if (authResult['code']){
+        $('#signinButton').attr('style', 'display: none');
+        $.ajax({
+          type: 'POST',
+          url: '/gconnect?globalstate={{STATE}}',
+          headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+          },
+          contentType: 'application/octet-stream; charset=utf-8',
+          success:function(result){
+            $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+                 setTimeout(function() {
+                  window.location.href = "/PenDriveStore";
+                 }, 2000);
+          },
+          processData:false,
+          data:authResult['code']
+        });
+      } else{
+        // handle error
+        console.log('There was an error: ' + authResult['error']);
+        $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+      }
+    }
+    auth2.grantOfflineAccess().then(signInCallback);
+  });
+</script>
+</body>
+
+

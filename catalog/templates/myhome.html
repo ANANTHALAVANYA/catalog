@@ -1,0 +1,32 @@
+{% include 'nav_bar.html' %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<div class="main">
+{% block content %}
+  <!-- {% for pdbb in pendrives %}
+    <a href="{{ url_for('showPds',pdccid=pdbb.id)}}">{{pdbb.pdusername}}</a><br>
+    {% endfor %} -->
+    {% with messages = get_flashed_messages() %}
+	    {% if messages %}
+	        <div class="alert alert-success alert-dismissable animated fadeIn">
+	            {% for message in messages %}
+	            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+	            <p class="h4"><strong>{{ message }}</strong></p>
+	            {% endfor %}
+	        </div>
+	    {% endif %}
+	{% endwith %}
+
+	<div class="text-center">
+		
+		<img style="width: 750px; height: 400px; margin: 0; padding: 0; margin-top: 50px" src="https://www.worldblaze.in/wp-content/uploads/2015/02/pen-drive.jpg">
+	</div>
+	
+
+
+<p style="color:yellow;font-size:50px;float:right">WELCOME TO PENDRIVES STORE</p>
+    
+{% endblock content %}
+</div>
